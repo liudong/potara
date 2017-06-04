@@ -88,15 +88,13 @@ class Document():
     that will be used for summarization.
     """
 
-    def __init__(self, docfile, skipPreprocess=False):
+    def __init__(self, content, skipPreprocess=False):
         """
         Initialize a document and preprocesses it by default.
         One can use its own preprocessing method but must define
         the fields tokens, taggedTokens and stemTokens.
         """
-        with codecs.open(docfile, 'r', 'utf-8') as doc:
-            self.content = doc.read()
-        self.docfile = docfile
+        self.content = content
 
         self.content = normalize(self.content)
 
@@ -110,8 +108,7 @@ class Document():
         """
         Preprocess the content of a document.
         """
-        logger.info("Preprocessing document %s",
-                    os.path.basename(self.docfile))
+        logger.info("Preprocessing document")
 
         self.sentences = sentTokenizer(self.content)
         self.tokens = [wordTokenizer(sentence)
